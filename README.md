@@ -1,32 +1,31 @@
-```markdown
 # LLM Council v2
 
 > Run a high-stakes decision through a council of 3–5 AI advisors with task-defined analytical contracts, blind rubric-based peer critique, and a chairman who **adjudicates rather than averages**.
 
-Originally inspired by [Andrej Karpathy's LLM Council methodology](https://x.com/karpathy). v2 is a structural rebuild grounded in 2025 multi-agent research: **ColMAD**, Council Mode, "Nine Judges, Two Effective Votes" (Kohli et al.), "Judging the Judges," "Talk Isn't Always Cheap," and Anthropic's multi-agent research system engineering lessons.
+Originally inspired by [Andrej Karpathy's LLM Council methodology](https://x.com/karpathy). v2 is a structural rebuild grounded in 2025 multi-agent research: **ColMAD**, Council Mode, "Nine Judges, Two Effective Votes," "Judging the Judges," and Anthropic's multi-agent research.
 
 ## What's New in v2
 
-v1 was a faithful implementation of Karpathy's original pattern. Since then, the multi-agent literature has moved fast — and several v1 design choices are now demonstrably suboptimal. v2 keeps the skeleton (parallel proposals → blind peer review → chairman synthesis) but rebuilds the three weakest layers:
+v1 was a faithful implementation of Karpathy's original pattern. Since then, the multi-agent literature has moved fast — and several v1 design choices are now demonstrably suboptimal. v2 keeps the same *intuition* but overhauls structure, role design, critique mechanics, and confidence calibration.
 
 | Layer | v1 | v2 |
 |---|---|---|
-| **Roles** | 5 fixed thinking-style personas (Contrarian, First Principles, Expansionist, Outsider, Executor) | Hybrid casting: 2 fixed **task-defined contracts** (Red Team, Evidence & Base Rates) + 1–3 dynamic domain roles per question |
+| **Roles** | 5 fixed thinking-style personas (Contrarian, First Principles, Expansionist, Outsider, Executor) | Hybrid casting: 2 fixed **task-defined contracts** (Red Team, Evidence & Base Rates) + 1–3 dynamic domain roles |
 | **Panel size** | Always 5 | 3 by default, 5 only for high-stakes (correlated-error research shows returns collapse fast) |
 | **Peer review** | Holistic "which is best?" ranking | Rubric scoring (0–3 across 5 criteria) + **factual vs emphasis** disagreement tagging |
-| **Chairman** | Synthesizes agreements/clashes/blind spots | **Adjudicates**: forced CoT, ban on compromise verdicts, mandatory devil's-advocate pass under unanimity, **mechanical confidence calibration** from council structure (not self-report) |
+| **Chairman** | Synthesizes agreements/clashes/blind spots | **Adjudicates**: forced CoT, ban on compromise verdicts, mandatory devil's-advocate pass under unanimity, **mechanical confidence calibration** |
 | **Triage** | None — always runs when triggered | Pre-flight classification: is this even council-worthy? Standard or high-stakes? |
 | **Framing** | "Framed question" string | Structured **Decision Brief** artifact (options, constraints, success criteria, reversibility, tripwires) |
-| **Output** | Verdict + agreements + clashes + blind spots + recommendation + next step | Verdict + confidence (HIGH/MODERATE/LOW) + why + **steelmanned dissent** + falsifiers + one next action + council map |
+| **Output** | Verdict + agreements + clashes + blind spots + recommendation + next step | Verdict + confidence (HIGH/MODERATE/LOW) + why + **steelmanned dissent** + falsifiers + one next action + counter-narrative |
 | **Artifacts** | HTML report + MD transcript | HTML report + MD transcript + **YAML decision journal** (for targeted re-runs when facts change) |
 | **High-stakes extras** | — | ColMAD-framed targeted resolution round on factual disagreements only |
 
 ## Why the Changes
 
-- **Personas are theater, not decorrelation.** EMNLP 2024 ("When A Helpful Assistant Is Not Really Helpful") shows persona prompts on the same model add stylistic flavor but don't decorrelate errors. Task contracts do — they force genuinely different reasoning traces.
-- **Bigger panels don't help.** Kohli et al. ("Nine Judges, Two Effective Votes") — 9 frontier models yield only ~2–2.5 effective independent votes. Panel almost never beats its best member. 3–5 is the sweet spot.
-- **Naïve debate can *degrade* accuracy.** "Talk Isn't Always Cheap" (2025) and "When and Why Does Multi-Agent Debate Fail" (2025) document sycophancy cascades and premature consensus. v2 keeps critique to a single blind round; multi-round dialogue only happens in the high-stakes targeted resolution phase, framed collaboratively (ColMAD).
-- **Chairmen tend to average.** v2 explicitly bans compromise verdicts, forces adjudication, allows majority override with justification, and requires a steelman-against-consensus whenever advisors are unanimous.
+- **Personas are theater, not decorrelation.** EMNLP 2024 ("When A Helpful Assistant Is Not Really Helpful") shows persona prompts on the same model add stylistic flavor but don't decorrelate errors. Analytical *contracts* (falsifiable constraints on reasoning) do.
+- **Bigger panels don't help.** Kohli et al. ("Nine Judges, Two Effective Votes") — 9 frontier models yield only ~2–2.5 effective independent votes. Panel almost never beats its best member. 3–5 is empirically optimal.
+- **Naïve debate can *degrade* accuracy.** "Talk Isn't Always Cheap" (2025) and "When and Why Does Multi-Agent Debate Fail" (2025) document sycophancy cascades and premature consensus. v2 keeps critics anonymous, randomizes order, and rewards dissent.
+- **Chairmen tend to average.** v2 explicitly bans compromise verdicts, forces adjudication, allows majority override with justification, and requires a steelman-against-consensus whenever advisors are split.
 - **Self-reported confidence is poorly calibrated.** v2 derives confidence *mechanically* from structural signals: unanimity + steelman survival + fact verification → HIGH; unresolved factual clashes → LOW.
 - **Format bias is the biggest judge bias.** "Judging the Judges" (2025) — judges prefer markdown 73–97% of the time vs 57% for humans. v2 lightly normalizes response formatting before critique.
 
@@ -112,13 +111,13 @@ Or for [OpenClaw](https://openclaw.ai) users, place in your workspace `skills/` 
 
 Every high-stakes council session produces three artifacts:
 
-- `council-report-[timestamp].html` — Visual briefing: verdict banner (with color-coded HIGH/MODERATE/LOW confidence badge), one thing to do first, why, **strongest case against** (equal visual weight to "why" — this is what makes it trustworthy), falsifiers, agreement/disagreement visual, collapsible advisor responses and peer reviews.
+- `council-report-[timestamp].html` — Visual briefing: verdict banner (with color-coded HIGH/MODERATE/LOW confidence badge), one thing to do first, why, **strongest case against** (equal visual weighting), steelman on dissent, call-to-action with tripwires.
 - `council-transcript-[timestamp].md` — Full transcript with de-anonymized advisor responses, all peer reviews with rubric scores, resolution outcomes (if any), and the chairman's synthesis.
 - `council-journal-[timestamp].yaml` — Compact decision record (verdict, confidence, key assumptions, tripwires, review date) enabling later targeted re-runs when facts change.
 
 ## Post-Council Re-runs
 
-When you tell the council *"we assumed X, but actually Y"* or *"here's new info"*, v2 doesn't re-run the whole thing. It loads the previous transcript + journal, identifies which advisor conclusions depended on the changed fact, re-runs only those advisors (usually 1–2), and the chairman produces a diff verdict: *"Previously X. Now Y. What changed: Z."* Decision journal gets updated.
+When you tell the council *"we assumed X, but actually Y"* or *"here's new info"*, v2 doesn't re-run the whole thing. It loads the previous transcript + journal, identifies which advisor conclusions depend on the changed fact, and re-runs only those advisors + the chairman.
 
 ## Failure Modes v2 Actively Guards Against
 
@@ -142,4 +141,3 @@ When you tell the council *"we assumed X, but actually Y"* or *"here's new info"
 ## License
 
 MIT
-```

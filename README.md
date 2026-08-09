@@ -9,19 +9,19 @@ Andrej Karpathy (Original LLM Council Methodology)
     ↓
 Bruno Okamoto (okjpg/llm-council - First Implementation)
     ↓
-LLM Council v2 (2025 Multi-Agent Architecture Rebuild)
-    ↓
-[OpenRouter Fusion Council - v2 Update]
-    └─ Council Members (via Fusion):
-       • Claude 3.7 Sonnet (Red Team / Pre-mortem)
-       • Fable 5 (Evidence & Base Rates)
-       • GPT 5.6 Sol (Customer Voice / Strategic)
-       • Gemini 3.1 Pro (Unit Economics / Path-to-Monday)
-       • DeepSeek v4 Flash 0731 (Second-Order Effects)
-       └─ Chairman: Claude 4 (Opus 4.7) - Adjudication & Confidence Calibration
+maacx2022 (LLM Council v2 - 2025 Architecture Rebuild)
+    └─ Research & Validation: OpenRouter Fusion (cross-provider evaluation)
+       └─ Advisors: Fable 5, Gemini 3.1 Pro, GPT 5.6-Sol, DeepSeek v4 Flash 0731
+       └─ Meta-Advisor: Claude 4 (Opus 4.7) - synthesis & adjudication
+       
+    Implementation & Runtime: See SKILL.md
 ```
 
-This version (`maacx2022/llm-council-mkII`) represents a structural rebuild grounded in 2025 multi-agent research, evaluated and refined through an OpenRouter Fusion council run with the strongest contemporary models.
+**v2 Development Process:**
+
+This version represents a structural rebuild of Karpathy's original council methodology, informed by 2025 multi-agent research. The updated architecture was developed and validated using **OpenRouter Fusion** — a cross-provider ensemble of Fable 5, Gemini 3.1 Pro, GPT 5.6-Sol, DeepSeek v4 Flash 0731, with Claude 4 (Opus 4.7) performing synthesis and adjudication.
+
+Fusion served as a **research & validation tool** for the theoretical framework. The actual runtime mechanism — how councils operate, how adjudication works, how confidence is calibrated — is specified in **SKILL.md**. This README documents the architecture and design rationale; SKILL.md is the executable specification.
 
 ---
 
@@ -52,18 +52,11 @@ v1 was a faithful implementation of Karpathy's original pattern. Since then, the
 - **Self-reported confidence is poorly calibrated.** v2 derives confidence *mechanically* from structural signals: unanimity + steelman survival + fact verification → HIGH; unresolved factual clashes → LOW.
 - **Format bias is the biggest judge bias.** "Judging the Judges" (2025) — judges prefer markdown 73–97% of the time vs 57% for humans. v2 lightly normalizes response formatting before critique.
 
-## The Honest Caveat
+## How It Works (Runtime)
 
-This skill runs inside Claude with sub-agents. That means all advisors are Claude instances — we cannot get true cross-family model diversity, which the research clearly favors. v2 compensates via:
+For the full executable specification and implementation details, see **SKILL.md**.
 
-1. Different **task contracts** per advisor (proven to matter more than persona flavor).
-2. **Interpretation diversity** — different question framings (arXiv 2507.21168).
-3. Temperature variation across sub-agents.
-4. Explicit rule: **treat unanimity as a hypothesis, not proof.** Same-family councils are especially vulnerable to shared training biases — hence the mandatory devil's-advocate pass.
-
-If you have OpenRouter Fusion or another cross-provider setup, true model heterogeneity is superior. This skill approximates the pattern within Claude's constraints.
-
-## How It Works
+Quick overview of the 8-step process:
 
 1. **Triage** — Is this council-worthy? What stakes? Missing critical context?
 2. **Enrich & Brief** — Scan workspace (`CLAUDE.md`, `memory/`, prior transcripts) → build structured Decision Brief
@@ -159,8 +152,8 @@ When you tell the council *"we assumed X, but actually Y"* or *"here's new info"
 
 - **Original methodology:** [Andrej Karpathy](https://x.com/karpathy)
 - **First implementation:** [Bruno Okamoto](https://x.com/obrunookamoto) (`okjpg/llm-council`)
-- **v2 architecture & research grounding:** 2025 multi-agent studies (Kohli et al., ColMAD, Council Mode, "Judging the Judges," "Talk Isn't Always Cheap," Anthropic's multi-agent research system)
-- **v2 evaluation & refinement:** OpenRouter Fusion council (Fable 5, GPT 5.6 Sol, Gemini 3.1 Pro, DeepSeek v4 Flash 0731, with Claude 4 Opus 4.7 as chairman)
+- **v2 architecture rebuild:** maacx2022, grounded in 2025 multi-agent research (Kohli et al., ColMAD, Council Mode, "Judging the Judges," "Talk Isn't Always Cheap," Anthropic's multi-agent research)
+- **v2 validation:** OpenRouter Fusion research (cross-provider evaluation; see SKILL.md for runtime implementation)
 
 ## License
 

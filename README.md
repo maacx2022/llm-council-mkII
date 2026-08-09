@@ -2,6 +2,29 @@
 
 > Run a high-stakes decision through a council of 3–5 AI advisors with task-defined analytical contracts, blind rubric-based peer critique, and a chairman who **adjudicates rather than averages**.
 
+## Genealogy & Lineage
+
+```
+Andrej Karpathy (Original LLM Council Methodology)
+    ↓
+Bruno Okamoto (okjpg/llm-council - First Implementation)
+    ↓
+LLM Council v2 (2025 Multi-Agent Architecture Rebuild)
+    ↓
+[OpenRouter Fusion Council - v2 Update]
+    └─ Council Members (via Fusion):
+       • Claude 3.7 Sonnet (Red Team / Pre-mortem)
+       • Fable 5 (Evidence & Base Rates)
+       • GPT 5.6 Sol (Customer Voice / Strategic)
+       • Gemini 3.1 Pro (Unit Economics / Path-to-Monday)
+       • DeepSeek v4 Flash 0731 (Second-Order Effects)
+       └─ Chairman: Claude 4 (Opus 4.7) - Adjudication & Confidence Calibration
+```
+
+This version (`maacx2022/llm-council-mkII`) represents a structural rebuild grounded in 2025 multi-agent research, evaluated and refined through an OpenRouter Fusion council run with the strongest contemporary models.
+
+---
+
 Originally inspired by [Andrej Karpathy's LLM Council methodology](https://x.com/karpathy). v2 is a structural rebuild grounded in 2025 multi-agent research: **ColMAD**, Council Mode, "Nine Judges, Two Effective Votes," "Judging the Judges," and Anthropic's multi-agent research.
 
 ## What's New in v2
@@ -134,9 +157,10 @@ When you tell the council *"we assumed X, but actually Y"* or *"here's new info"
 
 ## Credits
 
-- Original methodology: [Andrej Karpathy](https://x.com/karpathy)
-- Original skill adaptation: [Bruno Okamoto](https://x.com/obrunookamoto)
-- v2 upgrade: grounded in 2025 multi-agent research (Kohli et al., ColMAD, Council Mode, "Judging the Judges," "Talk Isn't Always Cheap," Anthropic's multi-agent research system)
+- **Original methodology:** [Andrej Karpathy](https://x.com/karpathy)
+- **First implementation:** [Bruno Okamoto](https://x.com/obrunookamoto) (`okjpg/llm-council`)
+- **v2 architecture & research grounding:** 2025 multi-agent studies (Kohli et al., ColMAD, Council Mode, "Judging the Judges," "Talk Isn't Always Cheap," Anthropic's multi-agent research system)
+- **v2 evaluation & refinement:** OpenRouter Fusion council (Fable 5, GPT 5.6 Sol, Gemini 3.1 Pro, DeepSeek v4 Flash 0731, with Claude 4 Opus 4.7 as chairman)
 
 ## License
 

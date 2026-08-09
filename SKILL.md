@@ -1,4 +1,3 @@
-```markdown
 ---
 name: llm-council
 description: "Run a high-stakes decision through a council of 3–5 AI advisors with task-defined analytical contracts (not persona theater), a blind rubric-based critique round, and a chairman who adjudicates rather than averages. Upgraded Nov 2025 with 2025 research: n_eff correlation limits, ColMAD critique framing, mechanical confidence calibration, forced devil's-advocate pass under unanimity, factual-vs-emphasis disagreement taxonomy. MANDATORY TRIGGERS: 'council this', 'run the council', 'war room this', 'pressure-test this', 'stress-test this', 'debate this'. STRONG TRIGGERS (only with a real decision + tradeoff + stakes): 'should I X or Y', 'which option', 'is this the right move', 'validate this', 'I'm torn between', 'get multiple perspectives'. HEURISTIC: if a single-model answer to this would start with 'it depends,' council it; if it would start with a fact, don't. DO NOT trigger on: factual lookups, drafting/creation tasks, reversible low-stakes choices, casual 'should I' without a meaningful tradeoff. DO trigger when the user presents a genuine decision with stakes, multiple options, and context that warrants adversarial pressure-testing."
@@ -400,4 +399,3 @@ If the user later says something like "the council assumed X, but actually Y" or
 - **Treat unanimity as a hypothesis, not proof.** Especially in a same-family council.
 - **The HTML report is what most users will read.** Verdict banner + strongest-case-against are the two most important elements.
 - **The decision journal turns one-shot answers into a decision-support relationship over time.** Encourage users to revisit tripwires.
-```
